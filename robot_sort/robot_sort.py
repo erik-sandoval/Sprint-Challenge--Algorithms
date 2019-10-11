@@ -127,27 +127,31 @@ class SortingRobot:
         and repeat
         """
         self.set_light_on()
-        while(self.can_move_right()):
+        while self.light_is_on():
 
             self.set_light_off()
-
-            self.swap_item()
-            self.move_right()
-
-            if (self.compare_item()):
-                self.set_light_on()
+            while(self.can_move_right()):
                 self.swap_item()
+                self.move_right()
 
-            self.move_left()
-            self.swap_item()
-            self.move_right()
+                if (self.compare_item() == 1):
+                    self.set_light_on()
+                    self.swap_item()
+
+                self.move_left()
+                self.swap_item()
+                self.move_right()
+                if self.can_move_right() == False and self.light_is_on() == True:
+                    while self.can_move_left() == True:
+                        self.move_left()
+                        self.set_light_off()
 
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
 
-    l = [3, 2, 4, 5, 1]
+    l = [3, 4, 5, 2, 1]
 
     robot = SortingRobot(l)
 
